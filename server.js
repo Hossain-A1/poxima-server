@@ -29,7 +29,7 @@ app.use("/api/user", userRoutes);
 // mongodb
 mongoose.set("strictQuery", false); // optional
 mongoose
-  .connect(uri)
+  .connect(uri.toString())
   .then(() => {
     // listen for requests
     app.listen(port, () => {
