@@ -11,7 +11,7 @@ const app = express();
 
 // port
 const port = process.env.PORT || 4000;
-const uri = process.env.MONGO_URI;
+const uri = process.env.MONGO_URI ;
 
 // middlewares
 app.use(cors());
@@ -29,7 +29,7 @@ app.use("/api/user", userRoutes);
 // mongodb
 mongoose.set("strictQuery", false); // optional
 mongoose
-  .connect(uri.toString())
+  .connect(uri)
   .then(() => {
     // listen for requests
     app.listen(port, () => {
