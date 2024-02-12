@@ -1,5 +1,4 @@
 const express = require("express");
-
 const {
   postProject,
   getAllProjects,
@@ -8,25 +7,26 @@ const {
   updateProject,
 } = require("../controllers/projectController");
 
-
-const requireAuth = require("../middleware/requireAuth");
+const requireAuth  = require("../middleware/requireAuth");
 
 // router
 const router = express.Router();
-router.use(requireAuth)
-// get all project
+
+router.use(requireAuth);
+
+// GET all projects
 router.get("/", getAllProjects);
 
-//  get a single project
-
+// GET a single project
 router.get("/:id", getSingleProject);
 
-// post a new project
+// POST a new project
 router.post("/", postProject);
-// delete a projet
+
+// DELETE a project
 router.delete("/:id", deleteProject);
 
-// update a project
+// UPDATE a project
 router.patch("/:id", updateProject);
 
 module.exports = router;

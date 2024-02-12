@@ -4,33 +4,36 @@ const jwt = require("jsonwebtoken");
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET, { expiresIn: "7d" });
 };
-// Login user
+
+// login user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.login(email, password);
+
     // create token
     const token = createToken(user._id);
-    React.status(200).json({ email, token });
-  } catch (error) {
-    req.status(400).json({ error: error.message });
+
+    res.status(200).json({ email, token });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
 
-// sign up user
+// signup user
 const signupUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.signup(email, password);
 
-    // create Token
+    // create token
     const token = createToken(user._id);
 
     res.status(200).json({ email, token });
-  } catch (er) {
-    res.status(400).json({ error: er.message });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 };
 

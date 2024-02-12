@@ -4,30 +4,36 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const projectRoutes = require("./routes/porjectRoute");
-const userRoute = require("./routes/userRoute");
+const userRoutes = require("./routes/userRoute");
 
 // express app
 const app = express();
+
 // port
 const port = process.env.PORT || 4000;
+const uri = process.env.MONGO_URI;
 
-// middelWare
+// middlewares
 app.use(cors());
 app.use(express.json());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-// Routes
+
+// routes
+app.get('/',(req,res)=>res.json({message:"hello"}))
 app.use("/api/projects", projectRoutes);
-app.use("/api/user", userRoute);
-// mongoDB
+app.use("/api/user", userRoutes);
+
+// mongodb
+mongoose.set("strictQuery", false); // optional
 mongoose
-  .connect(process.env.MONGO_UR)
+  .connect(uri)
   .then(() => {
-    // Listen for request
+    // listen for requests
     app.listen(port, () => {
-      console.log(`Conected to mango ad listening on port ${port}`);
+      console.log(`connected to mongo and listening on port ${port}`);
     });
   })
   .catch((err) => {
